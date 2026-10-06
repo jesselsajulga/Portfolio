@@ -1,83 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import shrekMotion from '../assets/shrek.webm';
-import shrekStatic from '../assets/shrek.webp';
-import faceMotion from '../assets/face.webm';
-import faceStatic from '../assets/face.webp';
-import frogMotion from '../assets/frog.webm';
-import frogStatic from '../assets/frog.webp';
 import throttle from 'lodash/throttle';
 
-
-const avatarData = [
-  {
-    id: 1,
-    name: "Shrek",
-    static: shrekStatic,
-    animated: shrekMotion
-  },
-  {
-    id: 2,
-    name: "Face",
-    static: faceStatic,
-    animated: faceMotion
-  },
-  {
-    id: 3,
-    name: "Frog",
-    static: frogStatic,
-    animated: frogMotion
-  },
+const NAV_LINKS = [
+  { name: 'About', href: '#about' },
+  { name: 'Work', href: '#works' },
+  { name: 'Contact', href: '#contact' },
 ];
 
 const Navbar = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // Avatar States
-  const [avatarIndex, setAvatarIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
+  // Throttled Scroll Spy & border trigger
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia('(hover: none) and (pointer: coarse)').matches);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const cycleAvatar = () => {
-    setAvatarIndex((prevIndex) => (prevIndex + 1) % avatarData.length);
-  };
-  const currentAvatar = avatarData[avatarIndex];
-
-  const handleAvatarClick = () => {
-    cycleAvatar();
-    setIsPlaying(true);
-  };
-
-  const handleMouseEnter = () => {
-    if (!isMobile) setIsPlaying(true);
-  };
-
-  const handleMouseLeave = () => {
-    if (!isMobile) setIsPlaying(false);
-  };
-
-  const handleVideoEnded = () => {
-    setIsPlaying(false);
-  };
-
-  // Scroll Spy Logic
-  useEffect(() => {
-    // Throttle the scroll handler to run at most once every 100ms
     const handleScroll = throttle(() => {
       if (typeof window === 'undefined') return;
-      const scrollPosition = window.scrollY + 200;
-      navLinks.forEach((link) => {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 20);
+
+      const scrollPosition = scrollY + 200;
+      NAV_LINKS.forEach((link) => {
         const section = document.querySelector(link.href);
         if (section) {
           const { offsetTop, offsetHeight } = section;
@@ -86,167 +31,127 @@ const Navbar = () => {
           }
         }
       });
+      if (scrollY < 180) {
+        setActiveTab('Home');
+      }
     }, 100);
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      handleScroll.cancel(); // Cancel any pending throttled calls on cleanup
+      handleScroll.cancel();
     };
   }, []);
 
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Works', href: '#works' },
-    { name: 'Contact', href: '#contact' },
-  ];
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   return (
-    <nav className="fixed top-0 w-full z-50 px-4 md:px-8 py-6 transition-all duration-300">
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-200 ${scrolled
+        ? 'bg-[#111111]/95 backdrop-blur-md border-b border-[#343431]'
+        : 'bg-[#111111] border-b border-transparent'
+        }`}
+    >
+      <div className="editorial-container">
+        <div className="flex items-center justify-between h-20 md:h-24">
 
-      {/* MAIN LAYOUT WRAPPER (Flex to put Avatar and Navbar side-by-side) */}
-      <div className="max-w-[1400px] mx-auto flex items-start gap-3 md:gap-5">
-
-        {/* --- 1. THE SEPARATE AVATAR BOX (Outside the pill) --- */}
-        <motion.div
-          onClick={handleAvatarClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-          whileTap={{ scale: 0.9 }}
-          // Added a slight margin-top (mt-1) so it aligns perfectly with the text inside the pill
-          className="relative flex-shrink-0 mt-1 md:mt-2 w-[52px] h-[52px] md:w-[60px] md:h-[60px] rounded-2xl bg-[#0a0a12]/90 backdrop-blur-xl border border-white/10 cursor-pointer overflow-hidden shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:shadow-[0_0_25px_rgba(34,211,238,0.5)] transition-shadow z-50"
-          title="Click to change character!"
-        >
-          <AnimatePresence mode="wait">
-            {isPlaying ? (
-              <motion.video
-                key={`${currentAvatar.id}-video`}
-                src={currentAvatar.animated}
-                autoPlay
-                muted
-                playsInline
-                controls={false}
-                onEnded={handleVideoEnded}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <motion.img
-                key={`${currentAvatar.id}-img`}
-                src={currentAvatar.static}
-                alt={currentAvatar.name}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="w-full h-full object-cover"
-              />
-            )}
-          </AnimatePresence>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
-            className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end justify-center pb-1 pointer-events-none"
+          {/* Pure Typographic Identity */}
+          <a
+            href="#home"
+            className="group flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F2F2ED] rounded-sm"
           >
-            <span className="text-[9px] text-cyan-300 font-cyber font-bold tracking-widest">TAP</span>
-          </motion.div>
-        </motion.div>
+            <span className="font-heading font-semibold text-sm md:text-base tracking-tight text-[#F2F2ED] group-hover:text-[#FFFFFF] transition-colors">
+              JESSEL ROME B. SAJULGA
+            </span>
+            <span className="font-mono-meta text-[11px] text-[#777772] tracking-wider">
+              COMPUTER ENGINEER
+            </span>
+          </a>
 
-
-        {/* --- 2. THE MAIN NAVBAR PILL --- */}
-        <div className={`flex-1 w-full bg-[#0a0a12]/90 backdrop-blur-xl 
-          border border-white/10 border-b-white/5 rounded-2xl px-5 md:px-8 py-4
-          shadow-[0_20px_50px_-12px_rgba(0,0,0,1),0_0_25px_-5px_rgba(34,211,238,0.15)]
-          transition-all duration-300
-          ${isOpen ? 'rounded-b-2xl' : ''}`}
-        >
-
-          <div className="flex justify-between items-center">
-            {/* --- LOGO --- */}
-            <a
-              href="#home"
-              onClick={() => setActiveTab('Home')}
-              className="cursor-pointer group relative z-50"
-            >
-              <span className="font-cyber font-bold tracking-widest text-xl md:text-3xl bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent inline-block transition-transform duration-300 
-                group-hover:scale-105 
-                drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]"
-              >
-                JESSEL'S MINI SHOWROOM
-              </span>
-            </a>
-
-            {/* --- DESKTOP MENU --- */}
-            <ul className="hidden md:flex space-x-10 relative">
-              {navLinks.map((link) => (
-                <li key={link.name} className="relative z-10">
-                  <a
-                    href={link.href}
-                    onClick={() => setActiveTab(link.name)}
-                    className={`text-base font-medium inline-block px-2 py-1 transition-all duration-300 
-                      hover:-translate-y-1 hover:text-cyan-400 hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]
-                      ${activeTab === link.name ? 'text-cyan-400' : 'text-gray-300'}`}
-                  >
-                    {link.name}
-                  </a>
-                  {activeTab === link.name && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute left-0 right-0 -bottom-2 h-[3px] bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
-                      transition={{ type: "spring", stiffness: 250, damping: 25 }}
+          {/* Desktop Editorial Navigation */}
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
+            {NAV_LINKS.map((link) => {
+              const isActive = activeTab === link.name;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className={`text-sm tracking-wide font-medium py-1 transition-colors relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F2F2ED] rounded-sm ${isActive
+                    ? 'text-[#FFFFFF]'
+                    : 'text-[#777772] hover:text-[#F2F2ED]'
+                    }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <span
+                      className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#FFFFFF]"
+                      aria-hidden="true"
                     />
                   )}
-                </li>
-              ))}
-            </ul>
+                </a>
+              );
+            })}
+          </nav>
 
-            {/* --- MOBILE TOGGLE BUTTON --- */}
+          {/* Mobile Menu Toggle Button */}
+          <div className="md:hidden flex items-center">
             <button
+              type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-white hover:text-cyan-400 transition-colors relative z-50"
+              className="p-2 text-[#F2F2ED] hover:text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F2F2ED] rounded-sm"
+              aria-expanded={isOpen}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
             >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
 
-          {/* --- MOBILE MENU DROPDOWN --- */}
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="md:hidden overflow-hidden flex flex-col items-center gap-6 mt-4 border-t border-white/10 pt-6"
-              >
-                {navLinks.map((link) => (
+        </div>
+      </div>
+
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="md:hidden bg-[#111111] border-b border-[#343431] px-5 py-6 shadow-sm"
+          >
+            <nav className="flex flex-col gap-4" aria-label="Mobile Navigation">
+              {NAV_LINKS.map((link) => {
+                const isActive = activeTab === link.name;
+                return (
                   <a
                     key={link.name}
                     href={link.href}
-                    onClick={() => {
-                      setActiveTab(link.name);
-                      setIsOpen(false);
-                    }}
-                    className={`text-lg font-bold transition-all duration-300 
-                      ${activeTab === link.name ? 'text-cyan-400' : 'text-gray-300'}
-                      hover:text-cyan-400 hover:tracking-widest`}
+                    onClick={() => setIsOpen(false)}
+                    className={`text-lg font-medium py-2 border-b border-[#222220] transition-colors ${isActive ? 'text-[#FFFFFF]' : 'text-[#777772]'
+                      }`}
                   >
                     {link.name}
                   </a>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-        </div>
-      </div>
-    </nav>
+                );
+              })}
+              <div className="pt-2 text-xs md:text-sm text-[#777772]">
+                Cagayan de Oro, PH · USTP
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 

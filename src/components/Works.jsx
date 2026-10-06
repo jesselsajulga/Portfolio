@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { ChevronRight, ChevronDown, Folder, FolderOpen, File, Terminal, X } from 'lucide-react';
+import React from 'react';
 
 import project1 from '../assets/project1.webp';
 import project2 from '../assets/project2.webp';
@@ -22,301 +20,370 @@ import project17 from '../assets/project17.webp';
 import project18 from '../assets/project18.webp';
 import project19 from '../assets/project19.webp';
 import project20 from '../assets/competetion.webp';
+import deblur from '../assets/deblur.webp';
+
+// --- VERIFIED WORK EXPERIENCE ENTRIES ---
+const workExperience = [
+  {
+    id: "exp-01",
+    num: "01",
+    role: "AI Trainer",
+    company: "DataAnnotation",
+    employmentType: "Full time",
+    period: "Sep 2026 – Present",
+    location: "Remote",
+    active: true,
+    desc: "Evaluating, training, and fine-tuning large language models. Conducting rigorous code generation reviews, automated reasoning assessment, prompt-response evaluation, and output truthfulness analysis.",
+    tags: ["LLM Evaluation", "Code Review", "Prompt Engineering", "Quality Benchmarking"],
+  },
+  {
+    id: "exp-02",
+    num: "02",
+    role: "Data Annotator",
+    company: "Remotasks",
+    employmentType: "Full time",
+    period: "Jun 2026 – Sep 2026",
+    location: "Remote",
+    active: false,
+    desc: "Structured dataset labeling and quality assurance for machine learning models. Analyzed multi-turn conversational responses, syntax accuracy, and logical deduction consistency.",
+    tags: ["Data Annotation", "Model Feedback", "Dataset QA", "Reasoning Audits"],
+  },
+  {
+    id: "exp-03",
+    num: "03",
+    role: "IT Intern",
+    company: "Department of Science and Technology Region X (DOST X)",
+    employmentType: "Internship",
+    period: "Jan 2026 – Apr 2026",
+    location: "Cagayan de Oro, Philippines",
+    active: false,
+    desc: "Assisted in regional government IT infrastructure support, network configuration, workstation deployment, diagnostic maintenance, and internal technical documentation.",
+    tags: ["Network Infrastructure", "System Administration", "IT Support", "Technical Maintenance"],
+  },
+  {
+    id: "exp-04",
+    num: "04",
+    role: "Computer Technician",
+    company: "Freelance",
+    employmentType: "Self-Employed",
+    period: "Sep 2022 – Jan 2023",
+    location: "Cagayan de Oro, Philippines",
+    active: false,
+    desc: "Component-level hardware diagnostics, custom PC system builds, board inspection, OS reinstallation, storage data recovery, and peripheral optimization.",
+    tags: ["Hardware Troubleshooting", "PC Assembly", "Diagnostics", "Component Repair"],
+  },
+];
+
+// --- 4 CURATED TECHNICAL DOMAINS GROUPING ALL 20 PROJECTS ---
+const projectDomains = [
+  {
+    id: "domain-01",
+    num: "01",
+    domain: "IoT, Robotics & Embedded Systems",
+    summary: "Physical computing, sensor integration, microcontroller firmware, and autonomous robotics platforms bridging software with real-world hardware actuation.",
+    featuredProject: {
+      title: "Autonomous Sumo Bot",
+      year: "2024",
+      highlight: "Competitive Robotics",
+      desc: "Autonomous competitive sumo combat robot engineered through Feedback and Control Systems course principles. Features real-time edge-detection sensor integration, high-torque motor actuation, and fast reactive decision algorithms.",
+      tech: ["Feedback & Control", "Microcontrollers", "Sensor Integration", "Robotics Hardware"],
+      image: project15,
+    },
+    additionalProjects: [
+      { name: "ThirstAid! Smart Hydration Monitor", year: "2024", tech: "IoT · Microprocessors · Sensors", image: project13 },
+      { name: "Ultrasonic Parking Assistance System", year: "2024", tech: "Arduino · Ultrasonic Sensors · C++", image: project18 },
+      { name: "Automatic Traffic Signal Light Prototype", year: "2024", tech: "Microcontrollers · Embedded Logic", image: project19 },
+      { name: "Embedded Mini Banking Terminal", year: "2025", tech: "Embedded Systems · Hardware IO", image: project16 },
+      { name: "Regulated Linear DC Power Supply", year: "2023", tech: "Analog Electronics · Transformers", image: project14 },
+    ],
+    skillsDemonstrated: ["Arduino", "Embedded C/C++", "Sensor Integration", "Feedback & Control", "Robotics", "Power Regulation"],
+  },
+  {
+    id: "domain-02",
+    num: "02",
+    domain: "Logic & Circuit Architecture",
+    summary: "Discrete digital logic design, breadboard circuit prototyping, state machine synchronization, and structural Hardware Description Language (HDL) synthesis.",
+    featuredProject: {
+      title: "Breadboard Competition Champion",
+      year: "2025",
+      highlight: "1st Place · USTP",
+      desc: "First place breadboard circuit design competition entry at USTP. Designed, wired, and debugged complex digital logic architectures under strict constraints using IC logic gates and rapid hardware troubleshooting.",
+      tech: ["Integrated Circuits", "Logic Gates", "Breadboard Prototyping", "Rapid Troubleshooting"],
+      image: project20,
+    },
+    additionalProjects: [
+      { name: "HDL & Verilog Structural Blocks", year: "2024", tech: "Verilog · HDL Synthesis · Simulation", image: project11 },
+      { name: "Finite State Machine Alarm System", year: "2024", tech: "FSM · Sequential Logic · Circuit Design", image: project4 },
+      { name: "Christmas Light Sequence Controller", year: "2024", tech: "555 Timer IC · Astable Multivibrator", image: project3 },
+      { name: "Anti-Theft Hardware Security Mechanism", year: "2024", tech: "Flip-Flops · Memory · Digital Logic", image: project2 },
+      { name: "Simple LCD Logic Display Circuit", year: "2024", tech: "IC Drivers · Alphanumeric Display", image: project1 },
+    ],
+    skillsDemonstrated: ["Verilog HDL", "Logic Gates (TTL/CMOS)", "Finite State Machines", "Flip-Flops", "555 Timer IC", "Rapid Breadboarding"],
+  },
+  {
+    id: "domain-03",
+    num: "03",
+    domain: "Networking, Infrastructure & Security",
+    summary: "Enterprise network topologies, routing & switching protocols, perimeter firewall hardening, identity access management, and vulnerability penetration testing.",
+    featuredProject: {
+      title: "Enterprise Network Infrastructure & Security",
+      year: "2025",
+      highlight: "Cisco Certified (CCNA)",
+      desc: "Cisco Certified Network Associate (CCNA) testbed implementation. Spans routing/switching, IP connectivity, automated Python scripts, pfSense perimeter firewalling, Tailscale overlay VPNs, and Windows Server Active Directory domain hardening.",
+      tech: ["Cisco CCNA", "pfSense", "Tailscale VPN", "Active Directory", "Python"],
+      image: project10,
+    },
+    additionalProjects: [
+      { name: "Active Directory & Windows Server Infrastructure", year: "2025", tech: "Windows Server · Active Directory · RBAC", image: project17 },
+      { name: "White-Hat Penetration Testing & Firewalling", year: "2025", tech: "Cybersecurity · pfSense · Tailscale", image: project12 },
+    ],
+    skillsDemonstrated: ["Cisco CCNA", "pfSense Firewalls", "Tailscale VPN", "Windows Server", "Active Directory", "TCP/IP & Subnetting", "Python Network Scripting"],
+  },
+  {
+    id: "domain-04",
+    num: "04",
+    domain: "Software Development & Machine Learning",
+    summary: "Machine learning computer vision models, modern web applications, low-level microprocessor assembly, and AI workflow automation.",
+    featuredProject: {
+      title: "Image Deblurring Neural Network",
+      year: "2026",
+      highlight: "Machine Learning / Computer Vision",
+      desc: "Deep learning computer vision system trained to restore and sharpen blurred photographic images. Implements convolutional architectures to recover fine high-frequency edge textures and resolve motion/optical defocus artifacts.",
+      tech: ["Machine Learning", "Computer Vision", "Python", "Deep Learning", "CNN / Neural Networks"],
+      image: deblur,
+    },
+    additionalProjects: [
+      { name: "Sensory Prediction Web Engine", year: "2026", tech: "Python · Machine Learning · Tailwind · Web UI", image: project7 },
+      { name: "MIPS Architecture & Assembly Pipeline", year: "2025", tech: "MIPS Assembly · Computer Architecture", image: project9 },
+      { name: "n8n Workflow Automation Extension", year: "2025", tech: "n8n · AI Automation · Scripting", image: project8 },
+      { name: "Portfolio Architecture & Showcase", year: "2026", tech: "React · Vite · Tailwind CSS · Motion", image: project5 },
+      { name: "Calculus Problem Solver Calculator", year: "2022", tech: "HTML5 · JavaScript · Evaluation APIs", image: project6 },
+    ],
+    skillsDemonstrated: ["Machine Learning", "Computer Vision", "Python", "React", "JavaScript", "MIPS Assembly", "n8n Automation"],
+  },
+];
 
 const Works = () => {
-  // --- STRUCTURED TREE DATA ---
-  const portfolioData = [
-    {
-      id: "hw-design",
-      category: "Logic and Circuit Design",
-      iconColor: "text-yellow-500",
-      projects: [
-        { id: "hw-1", title: "Simple LCD Design", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "Designing and implementing a simple Logic Circuit with Integrated Circuit Logic Gates.", image: project1, tech: ["Circuit Design", "Logic Gates"] },
-        { id: "hw-2", title: "Anti-Theft Mechanism", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "Using Logic Gates and Flip-Flops to create a security system.", image: project2, tech: ["Hardware", "Memory"] },
-        { id: "hw-3", title: "Christmas Light Controller", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "With the use of 555 Timer IC, designed a circuit that controls the blinking of Christmas lights.", image: project3, tech: ["Prototyping", "555 Timer IC"] },
-        { id: "hw-4", title: "Alarm System", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "A finite state machine implementation for managing alarm system.", image: project4, tech: ["State Machines"] },
-        { id: "hw-5", title: "HDL", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "Undergone a lesson about HDL and Verilog and implemented projects connecting with HDL lessons.", image: project11, tech: ["HDL", "Verilog"] },
-        { id: "hw-6", title: "Breadboard Competition Champion", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "Competed in a breadboard competition and won, applying skills in IC and logic gates.", image: project20, tech: ["IC", "Logic Gates", "Prototyping", "Problem Solving"] }
-      ]
-    },
-    {
-      id: "sw-dev",
-      category: "Software Development",
-      iconColor: "text-blue-400",
-      projects: [
-        { id: "sw-1", title: "Portfolio Website", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "A personal portfolio built with React, Tailwind CSS, and Framer Motion.", image: project5, tech: ["React", "TailwindCSS"] },
-        { id: "sw-2", title: "Calculus Calculator", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "With use of APIs and vanilla HTML/Javascript approach, created a web app for calculus calculator.", image: project6, tech: ["HTML", "CSS", "JavaScript"] },
-        { id: "sw-3", title: "Sensory Prediction", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "A web app that predicts the sensory output of a given input.", image: project7, tech: ["JavaScript", "TailwindCSS", "Python"] },
-        { id: "sw-4", title: "n8n Automation", status: "In Progress", statusColor: "text-blue-400 bg-blue-500/10 border-blue-500/20", desc: "A planned extension for Antigravity to automate repetitive syntax typing.", image: project8, tech: ["AI", "n8n"] },
-        { id: "sw-5", title: "MIPS", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "Has an understanding about microprocessors and its language used to.", image: project9, tech: ["MIPS", "Assembly", "Computer Architecture"] }
-      ]
-    },
-    {
-      id: "sec-net",
-      category: "Security & Networking",
-      iconColor: "text-red-400",
-      projects: [
-        { id: "sn-1", title: "CCNA Completion Certificate", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "Completed Cisco Certified Network Associate (CCNA) certification, demonstrating proficiency in network fundamentals, IP connectivity, security fundamentals, and automation.", image: project10, tech: ["Python", "Cybersecurity"] },
-        { id: "sn-2", title: "Cybersecurity", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: " Trained to test and do white hacks to systems to prevent attacks.", image: project12, tech: ["Cybersecurity", "pfsense", "tailscale"] },
-        { id: "sn-3", title: "Network Security", status: "Completed", statusColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20", desc: "Discovered and learned about server, active directory and its uses protecting users and admins from attacks.", image: project17, tech: ["Cybersecurity", "Active Directory", "Windows Server"] }
-      ]
-    },
-    {
-      id: "elec-eng",
-      category: "Electrical and Electronics",
-      iconColor: "text-orange-400",
-      projects: [
-        { id: "ee-1", title: "Automatic Signal Light", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "Created an automatic signal light for traffic control.", image: project19, tech: ["IoT", "Microcontrollers"] },
-        { id: "ee-2", title: "Parking Assistance", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "Created an automatic parking assistance system using Arduino and Ultrasonic Sensors.", image: project18, tech: ["IoT", "Microcontrollers"] },
-        { id: "ee-3", title: "Mini Banking System", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "Created a mini banking system.", image: project16, tech: ["IoT", "Microcontrollers"] },
-        { id: "ee-4", title: "Sumo Bot", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "Created a bot solely for sumo and with the use of Feedback and Control Systems course.", image: project15, tech: ["IoT", "Microcontrollers"] },
-        { id: "ee-5", title: "Power Supply", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "Created a power supply using Capacitors, Transformers and Voltage Regulators.", image: project14, tech: ["Electricals", "Electronics"] },
-        { id: "ee-6", title: "ThirstAid!", status: "Completed", statusColor: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20", desc: "An IOT Water Bottle that reminds its user to take a sip of water every hour.", image: project13, tech: ["IOT", "Electronics", "Microprocessor"] }]
-    }
-  ];
-
-  // --- PROGRESSIVE STATE MANAGEMENT ---
-  const [explorerPhase, setExplorerPhase] = useState('INIT');
-  const [openFolders, setOpenFolders] = useState({});
-  const [activeProject, setActiveProject] = useState(null);
-
-  const toggleFolder = (folderId) => {
-    setOpenFolders(prev => ({ ...prev, [folderId]: !prev[folderId] }));
-  };
-
-  const springTransition = { type: "spring", bounce: 0.2, duration: 0.6 };
-
   return (
-    <section id="works" className="min-h-screen bg-[#0a0a12] py-32 px-4 md:px-8 relative overflow-hidden flex flex-col justify-center">
+    <section
+      id="works"
+      className="bg-[#111111] text-[#F2F2ED] py-28 md:py-36 border-b border-[#343431]"
+    >
+      <div className="editorial-container">
 
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 pointer-events-none">
-        <div className="absolute top-40 left-0 w-[500px] h-[500px] bg-cyan-900/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[120px]" />
-      </div>
+        {/* --- 01. WORK EXPERIENCE SECTION --- */}
+        <div id="experience" className="mb-32">
 
-      <div className="max-w-7xl mx-auto w-full relative z-20">
+          {/* Eyebrow & Section Header */}
+          <div className="flex flex-wrap items-baseline justify-between gap-4 pb-6 border-b border-[#343431] mb-12 md:mb-16">
+            <div className="flex items-baseline gap-4">
+              <span className="font-mono-meta text-xs md:text-sm text-[#F2F2ED] font-semibold">
+                03 / WORK EXPERIENCE
+              </span>
+              <span className="font-mono-meta text-xs md:text-sm text-[#777772]">
+                4 POSITIONS
+              </span>
+            </div>
+            <span className="font-mono-meta text-xs text-[#777772]">
+              ROLES · INTERNSHIPS · TECHNICAL PRACTICE
+            </span>
+          </div>
 
-        {/* --- SECTION HEADER --- */}
-        <motion.div
-          layout
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12 text-center"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Project <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">Explorer</span>
-          </h2>
-          <p className="text-gray-400 text-lg">
-            {explorerPhase === 'INIT' ? "Initialize the environment to explore my work." : "Navigate through folders and hover over projects to view details."}
-          </p>
-        </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12">
+            <div className="lg:col-span-5">
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#F2F2ED] mb-4">
+                Professional Experience
+              </h2>
+              <p className="text-base text-[#B0B0AA] leading-relaxed max-w-md">
+                Industry experience spanning AI model training, data annotation quality assurance, regional government IT infrastructure support, and freelance hardware engineering.
+              </p>
+            </div>
 
-        <LayoutGroup>
-          {/* FIX: Changed h-[700px] to lg:h-[700px] so mobile can expand naturally */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start lg:h-[700px] w-full">
-
-            {/* --- LEFT PANEL: DIRECTORY TREE --- */}
-            <motion.div
-              layout
-              transition={springTransition}
-              className={`bg-[#11111a]/90 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col mx-auto
-                ${explorerPhase === 'INIT'
-                  ? 'w-[280px] h-[64px] cursor-pointer hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:-translate-y-1 transition-all lg:col-span-12'
-                  : 'w-full h-[450px] lg:h-full lg:col-span-5 xl:col-span-4' // FIX: Hardcoded mobile explorer height to 450px
-                }`}
-              onClick={() => {
-                if (explorerPhase === 'INIT') setExplorerPhase('OPENED');
-              }}
-            >
-              {explorerPhase === 'INIT' ? (
-                <div className="w-full h-full flex items-center justify-center gap-3 text-cyan-400 font-bold text-lg tracking-wide">
-                  <Terminal size={24} className="animate-pulse" />
-                  Launch Explorer
-                </div>
-              ) : (
-                <>
-                  <motion.div
-                    layout="position"
-                    onClick={() => {
-                      setExplorerPhase('INIT');
-                      setActiveProject(null);
-                    }}
-                    className="flex items-center gap-2 px-6 py-4 border-b border-white/5 bg-white/[0.02] cursor-pointer hover:bg-white/5 transition-colors group"
-                  >
-                    <Terminal size={16} className="text-cyan-400 group-hover:animate-pulse" />
-                    <span className="text-sm font-bold tracking-widest text-gray-300 uppercase">Explorer</span>
-
-                    <div className="ml-auto flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-[10px] text-gray-400 tracking-wider">CLOSE</span>
-                      <X size={14} className="text-gray-400" />
-                    </div>
-                  </motion.div>
-
-                  <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
-
-                    <motion.div layout="position">
-                      <div
-                        onClick={() => setExplorerPhase(explorerPhase === 'EXPANDED' ? 'OPENED' : 'EXPANDED')}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer text-gray-200 font-semibold mb-2 transition-colors group"
-                      >
-                        <div className="text-gray-500 group-hover:text-cyan-400 transition-colors">
-                          {explorerPhase === 'EXPANDED' ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                        </div>
-                        <Folder size={20} className="text-purple-400" fill={explorerPhase === 'EXPANDED' ? "#c084fc" : "none"} fillOpacity={0.2} />
-                        <span className="text-base tracking-wide group-hover:text-white transition-colors">Portfolio</span>
-                        <span className="text-xs text-gray-500 ml-1 font-normal opacity-0 group-hover:opacity-100 transition-opacity">(10 projects)</span>
-                      </div>
-                    </motion.div>
-
-                    <AnimatePresence>
-                      {explorerPhase === 'EXPANDED' && (
-                        <motion.div
-                          layout
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="ml-6 pl-3 border-l border-white/10 flex flex-col gap-1 overflow-hidden"
-                        >
-                          {portfolioData.map((category) => (
-                            <motion.div layout key={category.id} className="flex flex-col">
-
-                              <div
-                                onClick={() => toggleFolder(category.id)}
-                                className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/5 cursor-pointer text-gray-300 transition-colors group"
-                              >
-                                {openFolders[category.id] ? (
-                                  <ChevronDown size={16} className="text-gray-500 group-hover:text-cyan-400" />
-                                ) : (
-                                  <ChevronRight size={16} className="text-gray-500 group-hover:text-cyan-400" />
-                                )}
-
-                                {openFolders[category.id] ? (
-                                  <FolderOpen size={16} className={category.iconColor} />
-                                ) : (
-                                  <Folder size={16} className={category.iconColor} />
-                                )}
-
-                                <span className="font-medium group-hover:text-white transition-colors">{category.category}</span>
-                              </div>
-
-                              <AnimatePresence>
-                                {openFolders[category.id] && (
-                                  <motion.div
-                                    layout
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: "auto", opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="ml-5 pl-3 border-l border-white/10 flex flex-col gap-0.5 mt-1 mb-2 overflow-hidden"
-                                  >
-                                    {category.projects.map((project) => {
-                                      const isActive = activeProject?.id === project.id;
-                                      return (
-                                        <div
-                                          key={project.id}
-                                          // FIX: Removed onMouseLeave. The panel now stays open on scroll/mobile.
-                                          onMouseEnter={() => setActiveProject(project)}
-                                          onMouseLeave={() => setActiveProject(null)}
-                                          className={`flex items-center gap-2 px-2 py-1.5 rounded-lg cursor-pointer transition-all duration-200
-                                            ${isActive
-                                              ? 'bg-cyan-500/10 text-cyan-400 relative'
-                                              : 'text-gray-400 hover:text-gray-200 hover:bg-white/5'
-                                            }`}
-                                        >
-                                          {isActive && (
-                                            <motion.div layoutId="activeIndicator" className="absolute left-0 top-1 bottom-1 w-0.5 bg-cyan-400 rounded-r-full" />
-                                          )}
-                                          <File size={14} className={isActive ? 'text-cyan-400' : 'text-cyan-600'} />
-                                          <span className="text-sm truncate">{project.title}</span>
-                                        </div>
-                                      );
-                                    })}
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
-
-                            </motion.div>
-                          ))}
-                        </motion.div>
+            {/* Experience Timeline Rows */}
+            <div className="lg:col-span-7 divide-y divide-[#343431] border-y border-[#343431]">
+              {workExperience.map((exp) => (
+                <div
+                  key={exp.id}
+                  className="py-8 group hover:bg-[#181818]/60 px-4 -mx-4 transition-colors"
+                >
+                  <div className="flex flex-wrap items-baseline justify-between gap-2 mb-2 font-mono-meta text-xs text-[#777772]">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[#F2F2ED] font-medium">{exp.num}</span>
+                      <span>{exp.period}</span>
+                      {exp.active && (
+                        <span className="text-[10px] text-[#F2F2ED] border border-[#777772] px-1.5 py-0.2 rounded-sm">
+                          CURRENT
+                        </span>
                       )}
-                    </AnimatePresence>
+                    </div>
+                    <span>{exp.location} · {exp.employmentType.toUpperCase()}</span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+                    <h3 className="font-heading text-xl sm:text-2xl font-semibold text-[#F2F2ED] tracking-tight">
+                      {exp.role}
+                    </h3>
+                    <span className="text-base font-medium text-[#F2F2ED]">
+                      {exp.company}
+                    </span>
+                  </div>
+
+                  <p className="text-sm md:text-base text-[#B0B0AA] leading-relaxed mb-4">
+                    {exp.desc}
+                  </p>
+
+                  <div className="font-mono-meta text-xs text-[#777772]">
+                    {exp.tags.join(" · ")}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* --- 02. CURATED TECHNICAL DOMAINS & ALL 20 PROJECTS --- */}
+        <div id="project-domains" className="pt-12 border-t border-[#343431]">
+
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div>
+              <div className="flex items-baseline gap-4 mb-2">
+                <span className="font-mono-meta text-xs text-[#F2F2ED] font-semibold">
+                  03.B / TECHNICAL DOMAINS & PROJECTS
+                </span>
+                <span className="font-mono-meta text-xs text-[#777772]">
+                  4 DOMAINS · 20 ENTRIES
+                </span>
+              </div>
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#F2F2ED]">
+                Curated Engineering Work
+              </h2>
+            </div>
+            <p className="text-sm text-[#B0B0AA] max-w-md">
+              A curated showcase of 20 verified engineering projects, organized into four technical capabilities.
+            </p>
+          </div>
+
+          {/* 4 Curated Domain Cards */}
+          <div className="space-y-24 md:space-y-32">
+            {projectDomains.map((domain, idx) => {
+              const isInverted = idx % 2 === 1;
+
+              return (
+                <article
+                  key={domain.id}
+                  className="pt-8 border-t border-[#343431] group"
+                >
+                  {/* Category Eyebrow */}
+                  <div className="flex flex-wrap items-baseline justify-between gap-4 font-mono-meta text-xs text-[#777772] mb-6">
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-[#F2F2ED] font-medium">DOMAIN {domain.num}</span>
+                      <span className="text-[#F2F2ED] font-semibold text-sm">
+                        {domain.domain.toUpperCase()}
+                      </span>
+                    </div>
+                    <span>{domain.additionalProjects.length + 1} PROJECTS CATALOGED</span>
+                  </div>
+
+                  {/* Domain Overview Description */}
+                  <p className="text-[#B0B0AA] text-base md:text-lg max-w-3xl mb-10 leading-relaxed">
+                    {domain.summary}
+                  </p>
+
+                  {/* Asymmetric Featured Project Presentation */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-12">
+
+                    {/* Visual Stage */}
+                    <div className={`lg:col-span-7 ${isInverted ? 'lg:order-2' : 'lg:order-1'}`}>
+                      <div className="relative border border-[#343431] bg-[#181818] overflow-hidden">
+                        <img
+                          src={domain.featuredProject.image}
+                          alt={domain.featuredProject.title}
+                          loading="lazy"
+                          className="w-full h-[280px] sm:h-[360px] lg:h-[400px] object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500 block"
+                        />
+                        <div className="absolute top-4 left-4 bg-[#111111]/90 backdrop-blur-sm border border-[#343431] px-3 py-1 text-[11px] font-mono-meta text-[#F2F2ED]">
+                          FEATURED: {domain.featuredProject.highlight}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Featured Narrative */}
+                    <div className={`lg:col-span-5 flex flex-col justify-between ${isInverted ? 'lg:order-1' : 'lg:order-2'}`}>
+                      <div>
+                        <div className="flex items-center gap-3 font-mono-meta text-xs text-[#777772] mb-2">
+                          <span>{domain.featuredProject.year}</span>
+                          <span>·</span>
+                          <span className="text-[#F2F2ED] font-medium">FLAGSHIP PROTOTYPE</span>
+                        </div>
+
+                        <h3 className="font-heading text-2xl sm:text-3xl font-semibold text-[#F2F2ED] tracking-tight mb-4">
+                          {domain.featuredProject.title}
+                        </h3>
+
+                        <p className="text-sm md:text-base text-[#B0B0AA] leading-relaxed mb-6">
+                          {domain.featuredProject.desc}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-[#343431]">
+                        <span className="font-mono-meta text-[11px] text-[#777772] block mb-1.5">
+                          CORE ARCHITECTURE
+                        </span>
+                        <div className="text-xs font-mono-meta text-[#F2F2ED]">
+                          {domain.featuredProject.tech.join(" · ")}
+                        </div>
+                      </div>
+                    </div>
 
                   </div>
-                </>
-              )}
-            </motion.div>
 
-            {/* --- RIGHT PANEL: DYNAMIC PREVIEW --- */}
-            <AnimatePresence>
-              {explorerPhase !== 'INIT' && activeProject && (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.95, x: 20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={springTransition}
-                  // FIX: Changed from h-full to h-auto lg:h-full, and removed pointer-events-none so users can scroll long text
-                  className="w-full h-auto lg:h-full lg:col-span-7 xl:col-span-8 bg-[#11111a]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col shadow-2xl relative overflow-hidden"
-                >
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeProject.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      className="flex flex-col h-full"
-                    >
-                      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[100px]" />
+                  {/* Additional Cataloged Projects in this Domain */}
+                  <div className="bg-[#161616] border border-[#343431] p-6 md:p-8 rounded-sm mb-6">
+                    <span className="font-mono-meta text-[11px] text-[#777772] block mb-4">
+                      ADDITIONAL VERIFIED PROJECTS IN THIS DOMAIN ({domain.additionalProjects.length})
+                    </span>
 
-                      {/* FIX: Gave the image container a flexible height specifically for mobile */}
-                      <div className="w-full h-[200px] lg:h-[350px] rounded-xl overflow-hidden relative border border-white/10 mb-6 lg:mb-8 bg-black/50 flex-shrink-0">
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#11111a] via-transparent to-transparent opacity-60 z-10" />
-                        <img src={activeProject.image} alt={activeProject.title} loading="lazy" className="w-full h-full object-cover" />
-                      </div>
-
-                      <div className="flex-1 flex flex-col relative z-20">
-                        <div className="flex flex-wrap items-center gap-3 mb-4">
-                          <h3 className="text-3xl font-bold text-white">{activeProject.title}</h3>
-                          <span className={`px-3 py-1 rounded-full text-xs font-bold border ${activeProject.statusColor}`}>
-                            {activeProject.status}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {domain.additionalProjects.map((proj) => (
+                        <div
+                          key={proj.name}
+                          className="p-3.5 bg-[#111111] border border-[#2a2a27] hover:border-[#3e3e3a] transition-colors rounded-sm flex flex-col justify-between"
+                        >
+                          <div>
+                            <div className="flex items-center justify-between text-[11px] font-mono-meta text-[#777772] mb-1.5">
+                              <span>{proj.year}</span>
+                            </div>
+                            <h4 className="text-sm font-medium text-[#F2F2ED] mb-2 leading-snug">
+                              {proj.name}
+                            </h4>
+                          </div>
+                          <span className="text-[11px] font-mono-meta text-[#909088]">
+                            {proj.tech}
                           </span>
                         </div>
+                      ))}
+                    </div>
+                  </div>
 
-                        <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-6">
-                          {activeProject.desc}
-                        </p>
+                  {/* Skills Demonstrated Tag Strip */}
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-2 text-xs font-mono-meta">
+                    <span className="text-[#777772]">SKILLS DEMONSTRATED:</span>
+                    {domain.skillsDemonstrated.map((skill, sIdx) => (
+                      <span key={skill} className="text-[#B0B0AA]">
+                        {skill}{sIdx < domain.skillsDemonstrated.length - 1 ? " ·" : ""}
+                      </span>
+                    ))}
+                  </div>
 
-                        <div className="mt-auto pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-                          <div className="flex flex-wrap gap-2">
-                            {activeProject.tech.map((tech, i) => (
-                              <span key={i} className="text-xs font-mono text-gray-400 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
+                </article>
+              );
+            })}
           </div>
-        </LayoutGroup>
-      </div>
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(34, 211, 238, 0.5); }
-      `}} />
+        </div>
+
+      </div>
     </section>
   );
 };

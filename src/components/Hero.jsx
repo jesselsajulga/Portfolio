@@ -1,231 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import { hover, motion } from 'framer-motion';
-import { Github, Linkedin, Instagram, MessageCircle, Bot, Cpu } from 'lucide-react';
-import confetti from 'canvas-confetti';
-
+import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import profileImg from '../assets/profile.webp';
-import hoverImg from '../assets/profilemog.webp';
 
 const Hero = () => {
-
-  const myHoverImage = hoverImg;
-
-  const [isMobile, setIsMobile] = useState(false);
-  // Add state to manually track if a touch interaction is happening to force hover styles safely
-  const [activeBtn, setActiveBtn] = useState(null);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const handleConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { x: 0, y: 0.6 },
-      angle: 60,
-      colors: ['#6366f1', '#06b6d4', '#d946ef'],
-    });
-
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { x: 1, y: 0.6 },
-      angle: 120,
-      colors: ['#6366f1', '#06b6d4', '#d946ef'],
-    });
-  };
-
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center bg-[#0a0a12] px-6 relative overflow-visible pt-32 md:pt-40"
+      className="bg-[#111111] text-[#F2F2ED] pt-32 md:pt-40 pb-20 md:pb-28 border-b border-[#343431]"
     >
-      {!isMobile && (
-        <div className="absolute top-0 left-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] z-0" />
-      )}
+      <div className="editorial-container">
 
-      <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 md:gap-20 items-center relative z-10">
+        {/* Top structural eyebrow & metadata line */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#343431] mb-12 md:mb-16">
+          <span className="font-mono-meta text-xs md:text-sm text-[#F2F2ED] font-semibold">
+            01 / IDENTITY & INTRODUCTION
+          </span>
+          <span className="font-mono-meta text-xs md:text-sm text-[#777772]">
+            CAGAYAN DE ORO, PH · USTP
+          </span>
+        </div>
 
-        {/* --- LEFT COLUMN --- */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          viewport={{ once: false, amount: 0.3 }}
-          className="text-left"
-        >
-          {/* Welcome Badge */}
-          <div className="relative inline-block">
-            {/* Disabled floating particles on mobile */}
-            {!isMobile && (
-              <motion.div
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: -5 }}
-                transition={{ duration: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-                className="absolute -top-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
+        {/* 12-Column Asymmetric Editorial Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+
+          {/* LEFT: Typographic Hierarchy & Positioning (7 cols on desktop) */}
+          <div className="lg:col-span-7 flex flex-col justify-between">
+            <div>
+              <p className="font-mono-meta text-xs md:text-sm text-[#777772] mb-4">
+                COMPUTER ENGINEER / BUILDER
+              </p>
+
+              <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#F2F2ED] mb-8">
+                Jessel Rome <br />
+                Sajulga
+              </h1>
+
+              <p className="text-xl sm:text-2xl md:text-3xl font-normal text-[#F2F2ED] leading-tight max-w-2xl mb-8">
+                I build systems that connect software logic, electronics, and the physical world.
+              </p>
+
+              <p className="text-base md:text-lg text-[#B0B0AA] leading-relaxed max-w-xl mb-10">
+                Focused on hands-on prototyping and systems integration spanning digital logic,
+                embedded microcontrollers, robotics, and connected software.
+              </p>
+            </div>
+
+            {/* Editorial Calls to Action */}
+            <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-[#343431] mb-8">
+              <a
+                href="#works"
+                className="inline-flex items-center gap-2 bg-[#F2F2ED] text-[#111111] hover:bg-[#FFFFFF] hover:text-[#000000] px-6 py-3.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F2F2ED] rounded-sm"
               >
-              </motion.div>
-            )}
+                <span>Selected work</span>
+                <ArrowUpRight size={16} />
+              </a>
 
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleConfetti}
-              className="inline-flex items-center gap-2 px-4 py-2 mb-6 border border-purple-500/30 rounded-full bg-purple-900/10 backdrop-blur-md cursor-pointer group select-none relative z-10 hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-colors duration-300"
-            >
-              <span className="text-lg group-hover:animate-bounce">👋</span>
-              <span className="text-sm font-medium text-purple-200 group-hover:text-cyan-300 transition-colors">
-                Welcome to my portfolio
-              </span>
-            </motion.div>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 border border-[#343431] text-[#F2F2ED] hover:border-[#F2F2ED] hover:text-[#FFFFFF] px-6 py-3.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F2F2ED] rounded-sm"
+              >
+                <span>Get in touch</span>
+                <ArrowUpRight size={16} />
+              </a>
+            </div>
+
+            {/* Quick Credentials / Education Line */}
+            <div className="flex flex-wrap gap-x-8 gap-y-2 text-xs md:text-sm text-[#777772] font-mono-meta">
+              <div>
+                <span className="text-[#555550]">DEGREE:</span> BS Computer Engineering
+              </div>
+              <div>
+                <span className="text-[#555550]">INSTITUTION:</span> USTP
+              </div>
+            </div>
+
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 leading-tight">
-            Yo, Yours truly, <br />
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              Jessel Rome Sajulga
-            </span>
-          </h1>
-
-          <h2 className="text-xl md:text-2xl font-semibold text-cyan-400 mb-6">
-            A promising Computer Engineer from USTP
-          </h2>
-
-          <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-xl mb-8">
-            Focused on hands-on prototyping, turning abstract ideas into working systems.
-            With a clear focus on robotics, designing and integrating intelligent machines
-            that connect software logic with real-world hardware.
-          </p>
-
-          {/* Buttons */}
-          <div className="flex flex-wrap gap-6 mb-10">
-            <a
-              href="#contact"
-              onTouchStart={() => setActiveBtn('contact')}
-              onTouchEnd={() => setActiveBtn(null)}
-              className={`px-8 py-3 bg-[#0a0a12] border border-gray-500 text-white font-bold rounded-full transition-all duration-150 transform shadow-[0_4px_0_rgb(107,114,128)] select-none
-                         hover:scale-105 hover:bg-cyan-500 hover:border-cyan-500 hover:text-black hover:shadow-[0_4px_0_rgb(8,145,178)] hover:drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]
-                         focus:outline-none active:shadow-none active:translate-y-[4px] active:scale-100
-                         ${activeBtn === 'contact' ? 'scale-105 bg-cyan-500 border-cyan-500 text-black shadow-[0_4px_0_rgb(8,145,178)] drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]' : ''}`}
-              style={{ WebkitTapHighlightColor: 'transparent' }}
-            >
-              Contact me
-            </a>
-            <a
-              href="#works"
-              onTouchStart={() => setActiveBtn('works')}
-              onTouchEnd={() => setActiveBtn(null)}
-              className={`px-8 py-3 bg-[#0a0a12] border border-gray-500 text-white font-medium rounded-full transition-all duration-150 transform shadow-[0_4px_0_rgb(107,114,128)] select-none
-                         hover:scale-105 hover:bg-cyan-500 hover:border-cyan-500 hover:text-black hover:shadow-[0_4px_0_rgb(8,145,178)] hover:drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]
-                         focus:outline-none active:shadow-none active:translate-y-[4px] active:scale-100
-                         ${activeBtn === 'works' ? 'scale-105 bg-cyan-500 border-cyan-500 text-black shadow-[0_4px_0_rgb(8,145,178)] drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]' : ''}`}
-              style={{ WebkitTapHighlightColor: 'transparent' }}
-            >
-              View Projects
-            </a>
-          </div>
-
-          {/* --- SOCIAL ICONS --- */}
-          <div className="flex gap-4">
-            <SocialBtn icon={<Github size={20} />} href="https://github.com/jesselsajulga" />
-            <SocialBtn icon={<MessageCircle size={20} />} href="https://www.facebook.com/itsmejesselsajulga" />
-            <SocialBtn icon={<Linkedin size={20} />} href="https://www.linkedin.com/in/jessel-rome-b-sajulga-b22b843a4/" />
-            <SocialBtn icon={<Instagram size={20} />} href="https://www.instagram.com/_jcieee1/" />
-          </div>
-        </motion.div>
-
-        {/* --- RIGHT COLUMN --- */}
-        <motion.div
-          initial={{ opacity: 0, x: isMobile ? 0 : 200, y: isMobile ? 50 : 0 }}
-          whileInView={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true, amount: 0.3 }}
-          className="relative flex justify-center items-center perspective-1000 md:justify-end"
-        >
-          {/* Reduced blur on mobile */}
-          <div className={`absolute inset-0 bg-gradient-to-tr from-cyan-500/30 to-purple-600/30 rounded-[3rem] ${isMobile ? 'blur-[30px]' : 'blur-[60px]'} transform translate-y-6 scale-90`} />
-
-          <motion.div
-            animate={isMobile ? {} : { y: [0, -20, 0], x: [0, 10, 0, -10, 0], rotate: [0, 2, 0, -2, 0] }}
-            transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
-            // Added explicit widths and max widths using percentages (w-full max-w-[80vw] md:max-w-sm lg:max-w-md xl:max-w-lg) to scale proportionately
-            className={`relative w-full max-w-[80vw] mx-auto md:max-w-sm lg:max-w-md xl:max-w-lg border border-white/20 p-2 md:p-3 rounded-[2.5rem] shadow-2xl ${isMobile ? 'bg-white/5 backdrop-blur-sm' : 'bg-white/10 backdrop-blur-xl'} `}
-          >
-            <motion.div
-              animate={isMobile ? {} : { y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -top-6 -right-6 bg-[#3b82f6] text-white px-5 py-3 rounded-2xl shadow-[0_10px_20px_rgba(59,130,246,0.4)] flex items-center gap-2 z-30 pointer-events-none"
-            >
-              <Bot size={20} className="text-white" />
-              <span className="font-bold text-sm tracking-wide">Robotics</span>
-            </motion.div>
-
-            <motion.div
-              animate={isMobile ? {} : { y: [0, -8, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute -bottom-6 -left-6 bg-purple-600 text-white px-5 py-3 rounded-2xl shadow-[0_10px_20px_rgba(147,51,234,0.4)] flex items-center gap-2 z-30 pointer-events-none"
-            >
-              <Cpu size={20} className="text-white" />
-              <span className="font-bold text-sm tracking-wide">Computer Engr.</span>
-            </motion.div>
-
-            {/* --- UPDATED: HOVER IMAGE CROSSFADE CONTAINER --- */}
-            <div className="bg-white rounded-[2rem] overflow-hidden relative z-20 group cursor-pointer">
-
-              {/* 1. Primary Image (Always there, controls the height of the box) */}
+          {/* RIGHT: Editorial Portrait Composition (5 cols on desktop) */}
+          <div className="lg:col-span-5 flex flex-col">
+            <div className="relative border border-[#343431] bg-[#181818] overflow-hidden">
               <img
                 src={profileImg}
-                alt="Jessel Rome"
-                className="w-full h-auto object-cover transform transition-all duration-500 group-hover:scale-105"
+                alt="Jessel Rome Sajulga portrait"
+                className="w-full h-auto object-cover grayscale contrast-105 hover:grayscale-0 transition-all duration-500 block"
+                loading="eager"
               />
-
-              {/* 2. Secondary/Hover Image (Sits perfectly on top, invisible until hovered) */}
-              <img
-                src={hoverImg}
-                alt="Jessel Rome Alternate"
-                // absolute inset-0 glues this image exactly over the first one
-                // opacity-0 hides it normally, group-hover:opacity-100 reveals it on hover
-                className="absolute inset-0 w-full h-full object-cover transform transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-105"
-              />
-
             </div>
-          </motion.div>
-        </motion.div>
+
+            {/* Architectural caption / photo metadata */}
+            <div className="flex items-center justify-between pt-3 text-[11px] font-mono-meta text-[#777772]">
+              <span>FIG. 01 — PORTRAIT</span>
+              <span>JESSEL ROME B. SAJULGA</span>
+            </div>
+          </div>
+
+        </div>
 
       </div>
     </section>
-  );
-};
-
-// --- SOCIAL BUTTON COMPONENT ---
-const SocialBtn = ({ icon, href }) => {
-  const [isTouched, setIsTouched] = useState(false);
-
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onTouchStart={() => setIsTouched(true)}
-      onTouchEnd={() => setIsTouched(false)}
-      className={`w-12 h-12 flex items-center justify-center rounded-full 
-                 bg-[#0a0a12] border border-gray-600 text-gray-400 select-none
-                 transition-all duration-150 transform 
-                 shadow-[0_4px_0_rgb(55,65,81)] outline-none
-                 hover:scale-110 hover:bg-cyan-500 hover:border-cyan-500 hover:text-black 
-                 hover:shadow-[0_4px_0_rgb(8,145,178)] hover:drop-shadow-[0_0_15px_rgba(6,182,212,0.8)] 
-                 active:shadow-none active:translate-y-[4px] active:scale-100
-                 ${isTouched ? 'scale-110 bg-cyan-500 border-cyan-500 text-black shadow-[0_4px_0_rgb(8,145,178)] drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]' : ''}`}
-      style={{ WebkitTapHighlightColor: 'transparent' }}
-    >
-      {icon}
-    </a>
   );
 };
 

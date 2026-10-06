@@ -1,17 +1,118 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap'); /* Added Orbitron import */
 
-/* Global Reset for Overflow */
-html, body {
-  background-color: #0a0a12; /* Match your site background */
-  overflow-x: hidden;        /* Prevent horizontal scroll globally */
-  width: 100%;
-  margin: 0;
-  padding: 0;
+:root {
+  /* Editorial Light Palette */
+  --light-bg: #F5F5F2;
+  --light-surface: #FFFFFF;
+  --light-text: #111111;
+  --light-muted: #646460;
+  --light-faint: #92928C;
+  --light-rule: #D8D8D3;
+
+  /* Editorial Dark Palette (Authoritative Default) */
+  --dark-bg: #111111;
+  --dark-surface: #181818;
+  --dark-text: #F2F2ED;
+  --dark-muted: #B0B0AA;
+  --dark-faint: #777772;
+  --dark-rule: #343431;
+
+  /* Monochrome Accent */
+  --accent: #F2F2ED;
+  --accent-hover: #FFFFFF;
+
+  /* Layout Constraints */
+  --content-max: 1280px;
+  --page-padding: 40px;
 }
 
-/* Option 1: Hard Cyberpunk (Orbitron) */
-.font-cyber {
-  font-family: 'Orbitron', sans-serif;
+/* Global Reset & Typography Baseline */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+/* Selection State */
+::selection {
+  background-color: #343431;
+  color: #FFFFFF;
+}
+
+/* Accessible focus visible ring */
+:focus-visible {
+  outline: 2px solid #F2F2ED;
+  outline-offset: 2px;
+}
+
+/* Typography Utility Classes */
+.font-display {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.font-heading {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.font-mono-meta {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Shared Editorial Layout Container */
+.editorial-container {
+  max-width: var(--content-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (min-width: 640px) {
+  .editorial-container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .editorial-container {
+    padding-left: var(--page-padding);
+    padding-right: var(--page-padding);
+  }
+}
+
+/* Hairline Rules */
+.rule-light {
+  border-color: var(--light-rule);
+}
+
+.rule-dark {
+  border-color: var(--dark-rule);
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

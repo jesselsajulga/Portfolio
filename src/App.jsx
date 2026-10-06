@@ -1,5 +1,3 @@
-import { useState } from 'react'
-// Removed unused logo imports
 import './App.css'
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -13,7 +11,7 @@ function App() {
 
   return (
     // ADDED: overflow-x-hidden to prevent horizontal scroll
-    <div className="bg-[#0a0a12] min-h-screen text-white overflow-x-hidden w-full">
+    <div className="bg-[#111111] min-h-screen text-[#F2F2ED] overflow-x-hidden w-full selection:bg-[#343431] selection:text-[#FFFFFF]">
       <Navbar />
       <main>
         <Hero />
