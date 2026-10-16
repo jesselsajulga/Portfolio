@@ -74,7 +74,7 @@ const workExperience = [
   },
 ];
 
-// --- 4 CURATED TECHNICAL DOMAINS GROUPING ALL 20 PROJECTS ---
+// --- 4 CURATED TECHNICAL DOMAINS GROUPING ALL 21 PROJECTS ---
 const projectDomains = [
   {
     id: "domain-01",
@@ -153,13 +153,14 @@ const projectDomains = [
       image: deblur,
     },
     additionalProjects: [
+      { name: "Multi-Tenant SaaS Starter Kit", year: "2026", tech: "Next.js · Fastify · PostgreSQL RLS · Prisma · Stripe", image: project5 },
       { name: "Sensory Prediction Web Engine", year: "2026", tech: "Python · Machine Learning · Tailwind · Web UI", image: project7 },
       { name: "MIPS Architecture & Assembly Pipeline", year: "2025", tech: "MIPS Assembly · Computer Architecture", image: project9 },
       { name: "n8n Workflow Automation Extension", year: "2025", tech: "n8n · AI Automation · Scripting", image: project8 },
       { name: "Portfolio Architecture & Showcase", year: "2026", tech: "React · Vite · Tailwind CSS · Motion", image: project5 },
       { name: "Calculus Problem Solver Calculator", year: "2022", tech: "HTML5 · JavaScript · Evaluation APIs", image: project6 },
     ],
-    skillsDemonstrated: ["Machine Learning", "Computer Vision", "Python", "React", "JavaScript", "MIPS Assembly", "n8n Automation"],
+    skillsDemonstrated: ["Machine Learning", "Computer Vision", "Python", "React", "Next.js", "Fastify", "PostgreSQL RLS", "JavaScript", "MIPS Assembly", "n8n Automation"],
   },
 ];
 
@@ -242,7 +243,7 @@ const Works = () => {
 
         </div>
 
-        {/* --- 02. CURATED TECHNICAL DOMAINS & ALL 20 PROJECTS --- */}
+        {/* --- 02. CURATED TECHNICAL DOMAINS & ALL 21 PROJECTS --- */}
         <div id="project-domains" className="pt-12 border-t border-[#343431]">
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
@@ -252,7 +253,7 @@ const Works = () => {
                   03.B / TECHNICAL DOMAINS & PROJECTS
                 </span>
                 <span className="font-mono-meta text-xs text-[#777772]">
-                  4 DOMAINS · 20 ENTRIES
+                  4 DOMAINS · 21 ENTRIES
                 </span>
               </div>
               <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#F2F2ED]">
@@ -260,7 +261,7 @@ const Works = () => {
               </h2>
             </div>
             <p className="text-sm text-[#B0B0AA] max-w-md">
-              A curated showcase of 20 verified engineering projects, organized into four technical capabilities.
+              A curated showcase of 21 verified engineering projects, organized into four technical capabilities.
             </p>
           </div>
 

@@ -209,6 +209,7 @@ Portfolio
 #### Category 2: Software Development (`sw-dev`)
 | Project Title | Status | Goal / Description | Technologies / Tags | Asset File |
 | :--- | :--- | :--- | :--- | :--- |
+| **Multi-Tenant SaaS Starter Kit** | Completed | Production-ready full-stack B2B SaaS platform with Fastify, Next.js, and PostgreSQL Row-Level Security. | Next.js, Fastify, PostgreSQL RLS, Stripe | `project5.webp` |
 | **Portfolio Website** | Completed | A personal showcase website built with React, Tailwind CSS, and Framer Motion. | React, TailwindCSS | `project5.webp` |
 | **Calculus Calculator** | Completed | Web application designed to solve calculus mathematical problems using APIs and vanilla JS. | HTML, CSS, JavaScript | `project6.webp` |
 | **Sensory Prediction** | Completed | A web application that predicts sensory output values given sensory input data. | JavaScript, TailwindCSS, Python | `project7.webp` |
