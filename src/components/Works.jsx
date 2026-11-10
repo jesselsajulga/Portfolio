@@ -30,7 +30,7 @@ const workExperience = [
     role: "AI Trainer",
     company: "DataAnnotation",
     employmentType: "Full time",
-    period: "Sep 2026 – Present",
+    period: "Sep 2026 – Oct 2026",
     location: "Remote",
     active: true,
     desc: "Evaluating, training, and fine-tuning large language models. Conducting rigorous code generation reviews, automated reasoning assessment, prompt-response evaluation, and output truthfulness analysis.",
@@ -63,10 +63,22 @@ const workExperience = [
   {
     id: "exp-04",
     num: "04",
+    role: "Web Developer",
+    company: "Freelance",
+    employmentType: "Self-Employed",
+    period: "Aug 2022 – Present",
+    location: "Remote",
+    active: true,
+    desc: "Designing and developing responsive web applications and interactive client websites. Implementing performant frontend architectures, API integrations, and modern UI/UX workflows.",
+    tags: ["Web Development", "React", "JavaScript", "Tailwind CSS", "API Integration", "Frontend"],
+  },
+  {
+    id: "exp-05",
+    num: "05",
     role: "Computer Technician",
     company: "Freelance",
     employmentType: "Self-Employed",
-    period: "Sep 2022 – Jan 2023",
+    period: "Sep 2022 – Present",
     location: "Cagayan de Oro, Philippines",
     active: false,
     desc: "Component-level hardware diagnostics, custom PC system builds, board inspection, OS reinstallation, storage data recovery, and peripheral optimization.",
@@ -182,7 +194,7 @@ const Works = () => {
                 03 / WORK EXPERIENCE
               </span>
               <span className="font-mono-meta text-xs md:text-sm text-[#777772]">
-                4 POSITIONS
+                {workExperience.length} POSITIONS
               </span>
             </div>
             <span className="font-mono-meta text-xs text-[#777772]">
@@ -196,7 +208,7 @@ const Works = () => {
                 Professional Experience
               </h2>
               <p className="text-base text-[#B0B0AA] leading-relaxed max-w-md">
-                Industry experience spanning AI model training, data annotation quality assurance, regional government IT infrastructure support, and freelance hardware engineering.
+                Industry experience spanning AI model training, web development, data annotation quality assurance, regional government IT infrastructure support, and freelance software and hardware engineering.
               </p>
             </div>
 
@@ -211,11 +223,6 @@ const Works = () => {
                     <div className="flex items-center gap-2">
                       <span className="text-[#F2F2ED] font-medium">{exp.num}</span>
                       <span>{exp.period}</span>
-                      {exp.active && (
-                        <span className="text-[10px] text-[#F2F2ED] border border-[#777772] px-1.5 py-0.2 rounded-sm">
-                          CURRENT
-                        </span>
-                      )}
                     </div>
                     <span>{exp.location} · {exp.employmentType.toUpperCase()}</span>
                   </div>

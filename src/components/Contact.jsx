@@ -9,7 +9,7 @@ const socialLinks = [
   },
   {
     name: 'LinkedIn',
-    handle: 'Jessel Rome',
+    handle: 'Jessel Rome B. Sajulga',
     url: 'https://www.linkedin.com/in/jessel-rome-b-sajulga-b22b843a4/',
   },
   {
